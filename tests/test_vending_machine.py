@@ -110,6 +110,18 @@ def test_multiple_coins_and_diff_denominations_given():
     assert machine.coin_bank[1] == 18
 
 """
+#get_change throws an error if the required coins
+for change all go to zero
+"""
+def test_error_when_out_of_coins():
+    machine = VendingMachine()
+    with pytest.raises(ValueError) as err_info:
+        machine.load_coins(0,0,0,0,0,0,0,1)
+        machine.deposit(0.05)
+        machine.get_change(0.03)
+    assert str(err_info.value) == 'Unable to dispence the correct change, contact customer support'
+
+"""
 #reset_funds resets the deposited funds to zero
 """
 def test_reset_funds():
@@ -118,3 +130,4 @@ def test_reset_funds():
     assert machine.deposited_funds == 2
     machine.reset_funds()
     assert machine.deposited_funds == 0
+

@@ -33,6 +33,10 @@ class VendingMachine:
                 change_value -= coin_value
                 quantity -= 1
             self.coin_bank[coin] = quantity
+
+        if D(str(sum(coins_for_change))) < (D(str(self.deposited_funds)) - D(str(item_value))):
+            raise ValueError('Unable to dispence the correct change, contact customer support')
+        
         return coins_for_change
     
     def reset_funds(self):
