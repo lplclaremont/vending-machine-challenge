@@ -1,4 +1,4 @@
-# This is required since we encounter errors with float arithmetic
+# This is required since we will encounter errors with float arithmetic
 from decimal import Decimal as D
 
 class VendingMachine:
@@ -6,24 +6,22 @@ class VendingMachine:
         self.coin_bank = {}
         self.deposited_funds = 0
 
-    def load_coins(self, two_pound, pound, fifty, twenty, ten, five, two, one):
-        quantities = [two_pound, pound, fifty, twenty, ten, five, two, one]
+    def load_coins(self, two_pounds, pounds, fifties, twenties, tens, fives, twos, ones):
+        quantities = [two_pounds, pounds, fifties, twenties, tens, fives, twos, ones]
         self.__check_quantities(quantities)
 
-        self.coin_bank[2] = two_pound
-        self.coin_bank[1] = pound
-        self.coin_bank[0.5] = fifty
-        self.coin_bank[0.2] = twenty
-        self.coin_bank[0.1] = ten
-        self.coin_bank[0.05] = five
-        self.coin_bank[0.02] = two
-        self.coin_bank[0.01] = one
+        self.coin_bank[2] = two_pounds
+        self.coin_bank[1] = pounds
+        self.coin_bank[0.5] = fifties
+        self.coin_bank[0.2] = twenties
+        self.coin_bank[0.1] = tens
+        self.coin_bank[0.05] = fives
+        self.coin_bank[0.02] = twos
+        self.coin_bank[0.01] = ones
     
     def deposit(self, coin_value):
         self.__check_deposit_value(coin_value)
         self.deposited_funds += coin_value
-
-    # def place_order(self, item_value):
 
     def get_change(self, item_value):
         coins_for_change = []
@@ -33,9 +31,10 @@ class VendingMachine:
             while change_value - coin_value >= 0 and quantity > 0:
                 coins_for_change.append(coin)
                 change_value -= coin_value
-                self.coin_bank[coin] -= 1
+                quantity -= 1
+            self.coin_bank[coin] = quantity
         return coins_for_change
-
+    
 
     def __check_quantities(self, quantities):
         for q in quantities:

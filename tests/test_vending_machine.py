@@ -52,8 +52,8 @@ def test_invalid_deposit():
     assert str(err_info.value) == 'Deposits must be a valid UK coin denomination'
 
 """
-#get_change returns the correct coin
-quantities based on item value and funds
+#get_change returns the correct coin quantities and removes
+them from coin_bank based on item value and funds
 when there are certainly enough coins in coin bank
 """
 def test_no_change_given():
@@ -67,15 +67,44 @@ def test_one_coin_given_in_change():
     machine.load_coins(20,20,20,20,20,20,20,20)
     machine.deposit(1)
     assert machine.get_change(0.5) == [0.5]
+    assert machine.coin_bank[0.5] == 19
 
 def test_different_denominations_given():
     machine = VendingMachine()
     machine.load_coins(20,20,20,20,20,20,20,20)
     machine.deposit(2)
     assert machine.get_change(1.44) == [0.5, 0.05, 0.01]
+    assert machine.coin_bank[0.5] == 19
+    assert machine.coin_bank[0.05] == 19
+    assert machine.coin_bank[0.01] == 19
 
 def test_multiple_coins_same_denomination_given():
     machine = VendingMachine()
     machine.load_coins(20,20,20,20,20,20,20,20)
     machine.deposit(2)
     assert machine.get_change(1.6) == [0.2, 0.2]
+    assert machine.coin_bank[0.2] == 18
+
+def test_multiple_coins_and_diff_denominations_given():
+    machine = VendingMachine()
+    machine.load_coins(20,20,20,20,20,20,20,20)
+    machine.deposit(2)
+    machine.deposit(1)
+    assert machine.get_change(1.59) == [1, 0.2, 0.2, 0.01]
+    assert machine.coin_bank[1] == 19
+    assert machine.coin_bank[0.2] == 18
+    assert machine.coin_bank[0.01] == 19
+
+"""
+#get_change correctly returns change when one denomination
+in coin_bank runs out and removes them from coin_bank
+"""
+def test_multiple_coins_and_diff_denominations_given():
+    machine = VendingMachine()
+    machine.load_coins(1,20,20,20,20,20,20,20)
+    machine.deposit(2)
+    machine.deposit(2)
+    machine.deposit(0.2)
+    assert machine.get_change(0.2) == [2, 1, 1]
+    assert machine.coin_bank[2] == 0
+    assert machine.coin_bank[1] == 18
