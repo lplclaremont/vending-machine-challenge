@@ -108,3 +108,13 @@ def test_multiple_coins_and_diff_denominations_given():
     assert machine.get_change(0.2) == [2, 1, 1]
     assert machine.coin_bank[2] == 0
     assert machine.coin_bank[1] == 18
+
+"""
+#reset_funds resets the deposited funds to zero
+"""
+def test_reset_funds():
+    machine = VendingMachine()
+    machine.deposit(2)
+    assert machine.deposited_funds == 2
+    machine.reset_funds()
+    assert machine.deposited_funds == 0

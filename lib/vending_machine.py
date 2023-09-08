@@ -35,6 +35,9 @@ class VendingMachine:
             self.coin_bank[coin] = quantity
         return coins_for_change
     
+    def reset_funds(self):
+        self.deposited_funds = 0
+    
 
     def __check_quantities(self, quantities):
         for q in quantities:
