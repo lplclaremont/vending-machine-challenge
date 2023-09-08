@@ -1,3 +1,6 @@
+# This is required since we encounter errors with float arithmetic
+from decimal import Decimal as D
+
 class VendingMachine:
     def __init__(self):
         self.coin_bank = {}
@@ -20,9 +23,23 @@ class VendingMachine:
         self.__check_deposit_value(coin_value)
         self.deposited_funds += coin_value
 
+    # def place_order(self, item_value):
+
+    def get_change(self, item_value):
+        coins_for_change = []
+        change_value = D(str(self.deposited_funds)) - D(str(item_value))
+        for coin, quantity in self.coin_bank.items():
+            coin_value = D(str(coin))
+            while change_value - coin_value >= 0 and quantity > 0:
+                coins_for_change.append(coin)
+                change_value -= coin_value
+                self.coin_bank[coin] -= 1
+        return coins_for_change
+
+
     def __check_quantities(self, quantities):
         for q in quantities:
-            if q < 0 or type(q) != int:
+            if type(q) != int or q < 0:
                 raise TypeError('Coin quantities must be non negative integers')
     
     def __check_deposit_value(self, coin_value):

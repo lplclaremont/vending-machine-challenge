@@ -50,3 +50,32 @@ def test_invalid_deposit():
     with pytest.raises(ValueError) as err_info:
         machine.deposit(0.32)
     assert str(err_info.value) == 'Deposits must be a valid UK coin denomination'
+
+"""
+#get_change returns the correct coin
+quantities based on item value and funds
+when there are certainly enough coins in coin bank
+"""
+def test_no_change_given():
+    machine = VendingMachine()
+    machine.load_coins(20,20,20,20,20,20,20,20)
+    machine.deposit(1)
+    assert machine.get_change(1) == []
+
+def test_one_coin_given_in_change():
+    machine = VendingMachine()
+    machine.load_coins(20,20,20,20,20,20,20,20)
+    machine.deposit(1)
+    assert machine.get_change(0.5) == [0.5]
+
+def test_different_denominations_given():
+    machine = VendingMachine()
+    machine.load_coins(20,20,20,20,20,20,20,20)
+    machine.deposit(2)
+    assert machine.get_change(1.44) == [0.5, 0.05, 0.01]
+
+def test_multiple_coins_same_denomination_given():
+    machine = VendingMachine()
+    machine.load_coins(20,20,20,20,20,20,20,20)
+    machine.deposit(2)
+    assert machine.get_change(1.6) == [0.2, 0.2]
