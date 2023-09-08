@@ -1,4 +1,4 @@
-class VendingMachine:
+class CoinStore:
     def __init__(self, coin_quantities):
         self.__check_quantities(coin_quantities)
         self.coin_bank = {
