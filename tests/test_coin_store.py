@@ -112,6 +112,27 @@ def test_error_when_out_of_coins():
     assert str(err_info.value) == 'Unable to dispence the correct change, contact customer support'
 
 """
+#get_change throws an error if the item value
+if not valid money value
+"""
+def test_invalid_item_value():
+    machine = CoinStore([20,20,20,20,20,20,20,20])
+    machine.deposit(10)
+    with pytest.raises(TypeError) as err_info:
+        machine.get_change(-10)
+    assert str(err_info.value) == 'Item value must be a positive integer'
+
+"""
+#get_change does not remove coins in coin_bank if 
+item_value is higher than the total amount deposited
+"""
+def test_not_enough_funds():
+    machine = CoinStore([20,20,20,20,20,20,20,20])
+    assert machine.get_change(10) == 'Deposit more funds'
+    assert machine.coin_bank == {200: 20, 100: 20, 50: 20, 20: 20, 10: 20, 5: 20, 2: 20, 1: 20 }
+
+
+"""
 #reset_funds resets the deposited funds to zero
 """
 def test_reset_funds():

@@ -19,15 +19,17 @@ class CoinStore:
         self.deposited_funds += coin_value
 
     def get_change(self, item_value):
+        self.__check_item_value(item_value)
+        if item_value > self.deposited_funds: return 'Deposit more funds'
+
         coins_for_change = []
         remaining_change = self.deposited_funds - item_value
-        for coin, quantity in self.coin_bank.items():
-            coin_value = coin
+        for coin_value, quantity in self.coin_bank.items():
             while remaining_change - coin_value >= 0 and quantity > 0:
-                coins_for_change.append(coin)
+                coins_for_change.append(coin_value)
                 remaining_change -= coin_value
                 quantity -= 1
-            self.coin_bank[coin] = quantity
+            self.coin_bank[coin_value] = quantity
 
         if sum(coins_for_change) < (self.deposited_funds - item_value):
             raise ValueError('Unable to dispence the correct change, contact customer support')
@@ -42,6 +44,10 @@ class CoinStore:
             if type(q) != int or q < 0:
                 raise TypeError('Coin quantities must be non negative integers')
     
+    def __check_item_value(self, value):
+        if type(value) != int or value <= 0:
+            raise TypeError('Item value must be a positive integer')
+        
     def __check_deposit_value(self, coin_value):
         valid_values = [200, 100, 50, 20, 10, 5, 2, 1]
         if coin_value not in valid_values:
