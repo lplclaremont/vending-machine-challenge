@@ -1,4 +1,4 @@
-from lib.coin_store import CoinStore
+from lib.coin_bank import CoinBank
 print("")
 print("Test out the coin storage API as follows:")
 print("We'll set up an initial state of 20 coins of each denomination in the machine.")
@@ -10,7 +10,7 @@ print("'deposit' to deposit a coin")
 print("and 'purchase' to see the change given with an order")
 print("type 'exit' to finish testing")
 print("")
-coin_store = CoinStore([20,20,20,20,20,20,20,20])
+coin_bank = CoinBank([20,20,20,20,20,20,20, 20])
 
 while True:
     print("'peek': see coins")
@@ -20,15 +20,16 @@ while True:
 
     response = input()
     if response == 'peek':
-        print(coin_store.coin_bank)
+        print(coin_bank.bank)
         
     elif response == 'purchase':
         print("Enter value of item to buy (in pence)")
         print("i.e., £2.50 = 250, 79p = 79")
-        print("Note -- deposited funds: ", coin_store.deposited_funds)
+        print("Note -- deposited funds: ", coin_bank.deposited_funds)
         item_value = int(input())
         try:
-            print(coin_store.get_change(item_value))
+            print("Change received: ", coin_bank.dispense_change(item_value))
+            coin_bank.reset_funds()
         except Exception as error:
             print("An exception occurred: ", error)
     
@@ -37,8 +38,8 @@ while True:
         print("i.e, £1 = 100, 20p = 20, 1p = 1")
         coin = int(input())
         try:
-            coin_store.deposit(coin)
-            print("New total funds: ", coin_store.deposited_funds)
+            coin_bank.deposit(coin)
+            print("New total funds: ", coin_bank.deposited_funds)
         except Exception as error:
             print("An exception occurred:", error)
     elif response == 'exit':

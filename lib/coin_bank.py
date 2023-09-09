@@ -38,19 +38,20 @@ class CoinBank:
     def reset_funds(self):
         self.deposited_funds = 0 
 
+    # Checking error cases
     def __check_quantities(self, quantities):
         for q in quantities:
             if type(q) != int or q < 0:
                 raise TypeError('Coin quantities must be non negative integers')
     
+    def __check_deposit_value(self, coin_value):
+        valid_values = [200, 100, 50, 20, 10, 5, 2, 1]
+        if coin_value not in valid_values:
+            raise ValueError('Deposits must be a valid UK coin denomination')
+        
     def __check_item_value(self, value):
         if type(value) != int or value <= 0:
             raise TypeError('Item value must be a positive integer')
         elif value > self.deposited_funds:
             raise ValueError('Deposit more funds')
-        
-    def __check_deposit_value(self, coin_value):
-        valid_values = [200, 100, 50, 20, 10, 5, 2, 1]
-        if coin_value not in valid_values:
-            raise ValueError('Deposits must be a valid UK coin denomination')
         
