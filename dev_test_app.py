@@ -26,8 +26,8 @@ while True:
         print("Enter value of item to buy (in pence)")
         print("i.e., £2.50 = 250, 79p = 79")
         print("Note -- deposited funds: ", coin_bank.deposited_funds)
-        item_value = int(input())
         try:
+            item_value = int(input())
             print("Change received: ", coin_bank.dispense_change(item_value))
             coin_bank.reset_funds()
         except Exception as error:
@@ -36,8 +36,8 @@ while True:
     elif response == 'deposit':
         print("Enter a coin to deposit (in pence)")
         print("i.e, £1 = 100, 20p = 20, 1p = 1")
-        coin = int(input())
         try:
+            coin = int(input())
             coin_bank.deposit(coin)
             print("New total funds: ", coin_bank.deposited_funds)
         except Exception as error:

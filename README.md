@@ -15,7 +15,7 @@ There are three main methods on the CoinBank class:
 
 **reset_funds:** This method sets the deposited funds variable back to zero. Once a purchase is made, reset_funds can be called to reset funds back to zero.
 
-#### Notes on design
+#### Notes on design choices
 These decisions have been made when implementing the API:
 - I have used pence for the coin values (i.e £1 = 100, 50p = 50) to remove all risk of float rounding errors in calculations.
 - I have only allowed the deposit method to take one parameter (i.e, one coin) since the vending machine will only have one coin inputted at a time.
