@@ -20,7 +20,6 @@ class CoinBank:
 
     def dispense_change(self, item_value):
         self.__check_item_value(item_value)
-        if item_value > self.deposited_funds: raise ValueError('Deposit more funds')
 
         coins_for_change = []
         remaining_change = self.deposited_funds - item_value
@@ -47,6 +46,8 @@ class CoinBank:
     def __check_item_value(self, value):
         if type(value) != int or value <= 0:
             raise TypeError('Item value must be a positive integer')
+        elif value > self.deposited_funds:
+            raise ValueError('Deposit more funds')
         
     def __check_deposit_value(self, coin_value):
         valid_values = [200, 100, 50, 20, 10, 5, 2, 1]
