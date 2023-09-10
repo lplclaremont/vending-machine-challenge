@@ -5,8 +5,8 @@ This API is to be used in conjunction with vending machine software in order to 
 
 ## Design
 My program structure includes just one class, since we are only handling the behaviour of changing quantities of coins inside the machine. This is all kept inside the CoinBank class.
-Instances of CoinBank are initialised with a list of quantities of coin denominations (£2 ... 1p) and also the value of coins deposited by a user.
-So the input parameter is a python list with 8 integers, and the deposited funds is initially set to zero. The coins inside the machine are stored in a class variable called self.bank, which is a dictionary with coin values (in pence) as keys and their quantities as values. This allows us to handily keep track of and update the quantity of each denomination and also use their monetary value for calculations. Below is an initial plan of the class definition:
+Instances of CoinBank are initialised with a dictionary representing the quantities of each coin denomination (£2 ... 1p) and also the value of coins deposited by a user (zero).
+So the input parameter is a python list with 8 integers, one for each denomination which then populates the bank dictionary. This class variable, self.bank, stores the coin values (in pence) as keys and their quantities as values. This allows us to handily keep track of and update the quantity of each denomination and also use their monetary value for calculations. Below is an initial plan of the class definition:
 
 ![Screenshot of initial class design](./images/screenshot-class-design.png)
 
@@ -14,7 +14,7 @@ There are three main methods on the CoinBank class:
 
 **deposit:** This method allows users to deposit coins, one by one, into the machine and they are be added to the coin bank. The bank dictionary is therefore updated based on the coin which is passed into this method as a parameter.
 
-**dispense_change:** This method takes one parameter (the item's value to be purchased) and calculates the coins required as change based on the current funds deposited and the coin quantities in the bank dictionary. The bank dictionary is updated as required (coins returned as change are removed from the bank) and the method returns a list of the coins to be given to a user.
+**dispense_change:** This method takes one parameter (the item's value to be purchased) and calculates the coins required as change based on the current funds deposited and the coin quantities in the bank dictionary. The bank dictionary is updated as required (coins returned as change are removed from the bank) and the method returns a list of the coins to be dispensed to a user.
 
 **reset_funds:** This method sets the deposited funds variable back to zero. Once a purchase is made, reset_funds can be called to reset funds back to zero.
 
@@ -24,14 +24,14 @@ These decisions have been made when implementing the API:
 - I have only allowed the deposit method to take one parameter (i.e, one coin) since the vending machine will only have one coin inputted at a time.
 - Based on the given requirements (the program must 'register coins that have been deposited'), I've made the assumption that coins the user deposits are available for the machine to dispense as change, as opposed to just going into a seperate pile of change in the machine.
 - I have kept reset_funds in a seperate method in order to ensure that dispense_change *only* handles the behaviour of finding the change (and not returning funds to zero). We could also imagine a scenario in which the funds are incorrect due to a fault with another part of the vending machine, and it must be reset back to zero manually.
-- The deposited funds is just stored as the total value of coins deposited so far, since for this exercise we only require the total value in order to calculate the change.
+- The deposited funds is just stored as the total value of coins deposited so far, since for this exercise we only require the total value in order to calculate the change (and not the individual coin denominations which have been deposited).
 - The dispense_change return value is a list of the coin values, as this can be easily iterated through in another part of the software in order to tell the machine which coins to remove from the machine.
 
 #### Edge cases
 I have implemented errors with appropriate messages for the following cases:
 - If the coin quantities when initialising a CoinBank instance aren't all integers >= 0.
 - The value passed into the deposit method is not a valid UK coin denomination (or not an integer).
-- The value passed into the dispense_change method is not a valid monetary amount (integer > 0).
+- The value passed into the dispense_change method is not a valid monetary amount (i.e, an integer < 0).
 - The item's value in the dispense_change method is greater than the amount that the user has deposited.
 - The bank has run out of the right coin denominations in order to dispense the total amount of change necessary.
 
@@ -80,7 +80,7 @@ In order to test the behaviour of my code, you can run the command line applicat
 Run it as follows:
 ```bash
 cd vending-machine-challenge
-python3 dev_test_app.py
+python3 dev_test_harness.py
 ```
 And you'll see the following instructions:
 <br>

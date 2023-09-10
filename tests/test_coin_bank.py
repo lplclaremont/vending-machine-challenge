@@ -109,7 +109,7 @@ def test_error_when_out_of_coins():
     coin_bank.deposit(5)
     with pytest.raises(ValueError) as err_info:
         coin_bank.dispense_change(3)
-    assert str(err_info.value) == 'Unable to dispence the correct change, contact customer support'
+    assert str(err_info.value) == 'Unable to dispence the correct change'
 
 """
 #dispense_change throws an error if the item value

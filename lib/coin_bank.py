@@ -21,19 +21,19 @@ class CoinBank:
     def dispense_change(self, item_value):
         self.__check_item_value(item_value)
 
-        coins_for_change = []
+        customer_change = []
         remaining_change = self.deposited_funds - item_value
         for coin_value, quantity in self.bank.items():
-            while remaining_change - coin_value >= 0 and quantity > 0:
-                coins_for_change.append(coin_value)
+            while remaining_change - coin_value >= 0 and quantity != 0:
+                customer_change.append(coin_value)
                 remaining_change -= coin_value
                 quantity -= 1
             self.bank[coin_value] = quantity
 
-        if sum(coins_for_change) < (self.deposited_funds - item_value):
-            raise ValueError('Unable to dispence the correct change, contact customer support')
+        if sum(customer_change) < (self.deposited_funds - item_value):
+            raise ValueError('Unable to dispence the correct change')
         
-        return coins_for_change 
+        return customer_change 
 
     def reset_funds(self):
         self.deposited_funds = 0 
