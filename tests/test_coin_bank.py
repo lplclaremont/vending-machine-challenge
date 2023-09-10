@@ -2,11 +2,12 @@ import pytest
 from lib.coin_bank import CoinBank
 
 """
-A coin bank is initialised with 
+A coin bank is initialised with no current funds and
 the correct coin quantities from parameters
 """
 def test_initially():
     coin_bank = CoinBank([7,6,5,4,3,2,1,0])
+    assert coin_bank.deposited_funds == 0
     assert coin_bank.bank == {
         200: 7, 100: 6, 50: 5, 20: 4, 10: 3, 5: 2, 2: 1, 1: 0
     }
@@ -118,6 +119,16 @@ def test_multiple_coins_and_diff_denominations_given():
     assert coin_bank.bank[10] == 19
 
 """
+#dispense_change returns the total deposited
+funds if the item_value is zero
+"""
+def test_zero_item_value():
+    coin_bank = CoinBank([20,20,20,20,20,20,20,20])
+    coin_bank.deposit(200)
+    coin_bank.deposit(50)
+    assert sum(coin_bank.dispense_change(0)) == 250
+
+"""
 #dispense_change throws an error if the required coins
 for change all go to zero
 """
@@ -139,16 +150,6 @@ def test_invalid_item_value():
         coin_bank.dispense_change(-10)
     assert str(err_info.value) == 'Item value must be a non negative integer'
 
-
-"""
-#dispense_change returns the total deposited
-funds if the item_value is zero
-"""
-def test_zero_item_value():
-    coin_bank = CoinBank([20,20,20,20,20,20,20,20])
-    coin_bank.deposit(200)
-    coin_bank.deposit(50)
-    assert sum(coin_bank.dispense_change(0)) == 250
 
 """
 #dispense_change raises an error if item_value is

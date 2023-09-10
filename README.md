@@ -35,6 +35,8 @@ I have implemented errors with appropriate messages for the following cases:
 - The item's value in the dispense_change method is greater than the amount that the user has deposited.
 - The bank has run out of the right coin denominations in order to dispense the total amount of change necessary.
 
+**Note on errors:** I have thrown custom errors in this program to handle unexpected inputs and behaviour, however am aware that this will potentially cause crashes and may result in data inside of the memory to be lost if the program is to be restarted. Depending of the broader vending machine software, these exceptions may be caught elsewhere to prevent loss of data, as I have done in the test harness demonstration. However, without having a conversation with other developers on the project, I cannot know this for sure and the exceptions may need to be removed and the methods would simply return error values, like 'None', for example, if something were to go wrong. For the purposes of the exercise, though, I have kept my custom errors in the program.
+
 ### Setup and Use
 
 ```bash
@@ -42,15 +44,14 @@ I have implemented errors with appropriate messages for the following cases:
 git clone https://github.com/lplclaremont/vending-machine-challenge
 cd vending-machine-challenge
 
-# use brew to install pyenv in order to install dependencies
-brew install pyenv
-
+# using pipenv, install dependencies
+# (if pipenv isn't already installed, install it using 'pip install pipenv')
 pipenv install
 ```
 
 You can import and use the class now as follows in a python file:
 ```python
-from path.to.vending-machine-challenge.lib.coin_bank import CoinBank
+from lib.coin_bank import CoinBank
 # define initial quantities of coins in order --> [£2, £1, 50p, 20p, 10p, 5p, 2p, 1p]
 coin_quantities = [20,20,20,20,20,20,20,20]
 
