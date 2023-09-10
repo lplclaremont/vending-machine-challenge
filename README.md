@@ -46,13 +46,14 @@ pipenv install
 
 You can import and use the class now as follows in a python file:
 ```python
-from path-to-'vending-machine-challenge'.lib.coin_bank import CoinBank
-# quantities of coins in order --> [£2, £1, 50p, 20p, 10p, 5p, 2p, 1p]
+from path/to/vending-machine-challenge.lib.coin_bank import CoinBank
+# define initial quantities of coins in order --> [£2, £1, 50p, 20p, 10p, 5p, 2p, 1p]
 coin_quantities = [20,20,20,20,20,20,20,20]
 
+# initialise the coin bank (20 of each coin in the machine)
 coin_bank = CoinBank(coin_quantities)
 
-# deposit coins
+# deposit coins (one coin at a time)
 coin_bank.deposit(20)   # 20p coin added
 coin_bank.deposit(100)   # £1 coin added
 print(coin_bank.deposited_funds)
