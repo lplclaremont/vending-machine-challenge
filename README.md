@@ -30,8 +30,8 @@ These decisions have been made when implementing the API:
 #### Edge cases
 I have implemented errors with appropriate messages for the following cases:
 - If the coin quantities when initialising a CoinBank instance aren't all integers >= 0.
-- The value passed into the deposit method is not a valid UK coin denomination (or not an integer).
-- The value passed into the dispense_change method is not a valid monetary amount (i.e, an integer < 0).
+- The value passed into the deposit method is not a valid UK coin denomination.
+- The value passed into the dispense_change method is not a valid monetary amount (i.e, not an integer >= 0).
 - The item's value in the dispense_change method is greater than the amount that the user has deposited.
 - The bank has run out of the right coin denominations in order to dispense the total amount of change necessary.
 
@@ -52,10 +52,11 @@ pipenv install
 You can import and use the class now as follows in a python file:
 ```python
 from lib.coin_bank import CoinBank
-# define initial quantities of coins in order --> [£2, £1, 50p, 20p, 10p, 5p, 2p, 1p]
+# define initial quantities of coins
+# in order --> [£2, £1, 50p, 20p, 10p, 5p, 2p, 1p]
 coin_quantities = [20,20,20,20,20,20,20,20]
 
-# initialise the coin bank (20 of each coin in the machine)
+# initialise the coin bank (for this example, there are 20 of each coin in the machine)
 coin_bank = CoinBank(coin_quantities)
 
 # deposit coins (one coin at a time)
@@ -77,7 +78,7 @@ print(coin_bank.deposited_funds)
 
 ### Testing
 #### Interactive playground
-In order to test the behaviour of my code, you can run the command line application in order to view te coins in the bank, make deposits and purchases and see the change that will be returned.
+In order to test the behaviour of my code, you can run the command line application in order to view the coins in the bank, make deposits and purchases and see the change that will be returned.
 Run it as follows:
 ```bash
 cd vending-machine-challenge
