@@ -50,8 +50,8 @@ class CoinBank:
             raise ValueError('Deposits must be a valid UK coin denomination')
         
     def __check_item_value(self, value):
-        if type(value) != int or value <= 0:
-            raise TypeError('Item value must be a positive integer')
+        if type(value) != int or value < 0:
+            raise TypeError('Item value must be a non negative integer')
         elif value > self.deposited_funds:
             raise ValueError('Deposit more funds')
         

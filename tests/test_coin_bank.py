@@ -120,7 +120,18 @@ def test_invalid_item_value():
     coin_bank.deposit(10)
     with pytest.raises(TypeError) as err_info:
         coin_bank.dispense_change(-10)
-    assert str(err_info.value) == 'Item value must be a positive integer'
+    assert str(err_info.value) == 'Item value must be a non negative integer'
+
+
+"""
+#dispense_change returns the total deposited
+funds if the item_value is zero
+"""
+def test_zero_item_value():
+    coin_bank = CoinBank([20,20,20,20,20,20,20,20])
+    coin_bank.deposit(200)
+    coin_bank.deposit(50)
+    assert sum(coin_bank.dispense_change(0)) == 250
 
 """
 #dispense_change raises an error if item_value is
