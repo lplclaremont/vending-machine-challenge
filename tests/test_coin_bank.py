@@ -101,6 +101,23 @@ def test_complicated_example():
     assert coin_bank.bank[2] == 0
 
 """
+#dispense_change will return change correctly
+after multiple purchases made
+"""
+def test_multiple_coins_and_diff_denominations_given():
+    coin_bank = CoinBank([20,20,20,20,20,20,20,20])
+    coin_bank.deposit(100)
+    assert coin_bank.dispense_change(60) == [20, 20]
+    assert coin_bank.bank[20] == 18
+
+    coin_bank.reset_funds()
+    coin_bank.deposit(200)
+    coin_bank.deposit(50)
+    assert coin_bank.dispense_change(220) == [20, 10]
+    assert coin_bank.bank[20] == 17
+    assert coin_bank.bank[10] == 19
+
+"""
 #dispense_change throws an error if the required coins
 for change all go to zero
 """
