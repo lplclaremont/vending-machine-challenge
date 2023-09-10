@@ -1,11 +1,13 @@
 # Vending Machine Change Tracker
 
 ## Overview
-This API is to be used in conjunction with vending machine software in order to track the coins inside the machine. It is to be set initially with the given quantities of each denomination and then will be updated as the user makes deposits and purchases.
+This API is to be used in conjunction with vending machine software in order to track the coins inside the machine. It is to be set initially with the quantities of each coin denomination which are loaded into the machine and will then update these quantities as the user makes deposits and purchases.
 
 ## Design
-My work includes just one class, since we are only handling the behaviour change of the quantities of coins inside the machine. This is all kept inside the CoinBank class.
-Instances of CoinBank are initialised with a list of quantities of coin denominations (£2, £1, 50p, 20p, 10p, 5p, 2p, 1p) and also the value of coins deposited by a user. So the input parameter is a python list with 8 integers, and the deposited funds is initially set to zero. The coins inside the machine are stored in a class variable called self.bank, which is a dictionary with coin values (in pence) as keys and their quantities as values. This allows us to handily keep track of and update the quantity of each denomination and also use their monetary value for calculations.
+My prrogram structure includes just one class, since we are only handling the behaviour change of the quantities of coins inside the machine. This is all kept inside the CoinBank class.
+Instances of CoinBank are initialised with a list of quantities of coin denominations (£2, £1, 50p, 20p, 10p, 5p, 2p, 1p) and also the value of coins deposited by a user. So the input parameter is a python list with 8 integers, and the deposited funds is initially set to zero. The coins inside the machine are stored in a class variable called self.bank, which is a dictionary with coin values (in pence) as keys and their quantities as values. This allows us to handily keep track of and update the quantity of each denomination and also use their monetary value for calculations. Below is an initial plan of the class definition:
+
+![Screenshot of initial class design](./images/screenshot-class-design.png)
 
 There are three main methods on the CoinBank class:
 
@@ -19,7 +21,7 @@ There are three main methods on the CoinBank class:
 These decisions have been made when implementing the API:
 - I have used pence for the coin values (i.e £1 = 100, 50p = 50) to remove all risk of float rounding errors in calculations.
 - I have only allowed the deposit method to take one parameter (i.e, one coin) since the vending machine will only have one coin inputted at a time.
-- I have kept reset_funds in a seperate method in order to ensure that dispense_change *only* handles the behaviour of finding the change. We could also imagine a scenario in which the funds are incorrect due to a fault in the hardware of the vending machine, and it must be reset back to zero manually.
+- I have kept reset_funds in a seperate method in order to ensure that dispense_change *only* handles the behaviour of finding the change. We could also imagine a scenario in which the funds are incorrect due to a fault with another part of the vending machine, and it must be reset back to zero manually.
 - The deposited funds is just stored as the total value of coins deposited so far, since for this exercise we only require the total value in order to calculate the change.
 - The dispense_change return value is a list of the coin values, as this can be easily iterated through in another part of the software in order to tell the machine which coins to remove from the machine.
 
@@ -46,7 +48,7 @@ pipenv install
 
 You can import and use the class now as follows in a python file:
 ```python
-from path/to/vending-machine-challenge.lib.coin_bank import CoinBank
+from path.to.vending-machine-challenge.lib.coin_bank import CoinBank
 # define initial quantities of coins in order --> [£2, £1, 50p, 20p, 10p, 5p, 2p, 1p]
 coin_quantities = [20,20,20,20,20,20,20,20]
 
