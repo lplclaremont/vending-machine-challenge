@@ -42,7 +42,6 @@ class CoinBank:
         Change as a list of coin values
         
         """
-
         self.__check_item_value(item_value)
 
         customer_change = []
