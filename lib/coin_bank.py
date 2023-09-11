@@ -14,9 +14,10 @@ class CoinBank:
         self.deposited_funds = 0
     
     def deposit(self, coin_value):
-        """
-        This function updates self.bank by incrementing
-        the quantity of the corresponding coin value by one.
+        '''
+        This function adds to deposited_funds and updates self.bank
+        by incrementing the quantity of the corresponding coin
+        value by one.
 
         Param:
         coin_value (int): value of coin in pence
@@ -24,14 +25,14 @@ class CoinBank:
         Returns:
         None
 
-        """
+        '''
 
         self.__check_deposit_value(coin_value)
         self.bank[coin_value] += 1
         self.deposited_funds += coin_value
 
     def dispense_change(self, item_value):
-        """
+        '''
         This function calculates the change (coins) to be returned
         and updates the self.bank quantities accordingly.
 
@@ -41,7 +42,7 @@ class CoinBank:
         Returns:
         Change as a list of coin values
         
-        """
+        '''
         self.__check_item_value(item_value)
 
         customer_change = []
@@ -59,9 +60,9 @@ class CoinBank:
         return customer_change 
 
     def reset_funds(self):
-        """
-        This resets the deposited_funds variable to zero
-        """
+        '''
+        This resets the deposited_funds variable to zero.
+        '''
         self.deposited_funds = 0 
 
     # Checking error cases
