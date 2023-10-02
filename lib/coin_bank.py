@@ -54,7 +54,9 @@ class CoinBank:
                 quantity -= 1
             self.bank[coin_value] = quantity
 
-        if sum(customer_change) < (self.deposited_funds - item_value):
+        if remaining_change > 0:
+            for coin in customer_change:
+                self.bank[coin] += 1
             raise ValueError('Unable to dispence the correct change')
         
         return customer_change 
