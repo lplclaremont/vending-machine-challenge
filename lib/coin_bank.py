@@ -43,7 +43,7 @@ class CoinBank:
         Change as a list of coin values
         
         '''
-        self.__check_item_value(item_value)
+        if self.__check_item_value(item_value): return self.__check_item_value(item_value)
 
         customer_change = []
         remaining_change = self.deposited_funds - item_value
@@ -57,7 +57,7 @@ class CoinBank:
         if remaining_change > 0:
             for coin in customer_change:
                 self.bank[coin] += 1
-            raise ValueError('Unable to dispence the correct change')
+            return 'Unable to dispence the correct change'
         
         return customer_change 
 
@@ -82,5 +82,5 @@ class CoinBank:
         if type(value) != int or value < 0:
             raise TypeError('Item value must be a non negative integer')
         elif value > self.deposited_funds:
-            raise ValueError('Deposit more funds')
+            return 'Item value is greater than the deposited funds'
         

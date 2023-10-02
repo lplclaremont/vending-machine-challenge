@@ -15,7 +15,7 @@ def test_initially():
 
 """
 Throws an error when the initial input
-are not all valid coin quantities
+values are not all valid coin quantities
 """
 def test_invalid_coin_quantity():
     with pytest.raises(TypeError) as err_info:
@@ -130,15 +130,13 @@ def test_zero_item_value():
     assert sum(coin_bank.dispense_change(0)) == 250
 
 """
-#dispense_change throws an error if the required coins
-for change all go to zero
+#dispense_change returns a helpful string if the
+required coins for change all go to zero
 """
 def test_error_when_out_of_coins():
     coin_bank = CoinBank({200:0, 100:0, 50:0, 20:0, 10:0, 5:0, 2:0, 1:1})
     coin_bank.deposit(5)
-    with pytest.raises(ValueError) as err_info:
-        coin_bank.dispense_change(3)
-    assert str(err_info.value) == 'Unable to dispence the correct change'
+    assert coin_bank.dispense_change(3) == 'Unable to dispence the correct change'
     assert coin_bank.bank[1] == 1
 
 """
@@ -153,15 +151,14 @@ def test_invalid_item_value():
     assert str(err_info.value) == 'Item value must be a non negative integer'
 
 """
-#dispense_change raises an error if item_value is
-higher than the total amount deposited
+#dispense_change returns a helpful strinf if item_value
+is higher than the total amount deposited
 """
 def test_not_enough_funds():
     coin_bank = CoinBank({200:20, 100:20, 50:20, 20:20, 10:20, 5:20, 2:20, 1:20})
-    with pytest.raises(ValueError) as err_info:
-        assert coin_bank.dispense_change(10)
-    assert str(err_info.value) == 'Deposit more funds'
-    assert coin_bank.bank == {200: 20, 100: 20, 50: 20, 20: 20, 10: 20, 5: 20, 2: 20, 1: 20}
+    coin_bank.deposit(5)
+    assert coin_bank.dispense_change(10) == 'Item value is greater than the deposited funds'
+    assert coin_bank.bank == {200: 20, 100: 20, 50: 20, 20: 20, 10: 20, 5: 21, 2: 20, 1: 20}
 
 """
 #reset_funds resets the deposited funds to zero
