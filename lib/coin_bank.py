@@ -37,7 +37,7 @@ class CoinBank:
         and updates the self.bank quantities accordingly.
 
         Param:
-        item_value (int): cost of item being purchased in pence
+        item_value (int): price of item being purchased in pence
 
         Returns:
         Change as a list of coin values
@@ -59,11 +59,11 @@ class CoinBank:
                 self.bank[coin] += 1
             return 'Unable to dispence the correct change'
         
-        return customer_change 
+        return customer_change
 
     def reset_funds(self):
         '''
-        This resets the deposited_funds variable to zero.
+        This sets the deposited_funds variable to zero.
         '''
         self.deposited_funds = 0 
 
