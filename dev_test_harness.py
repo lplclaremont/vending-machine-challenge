@@ -11,7 +11,7 @@ print("'purchase' to see the change given with an order")
 print("type 'exit' to finish testing")
 print("")
 
-coin_bank = CoinBank([20,20,20,20,20,20,20,20])
+coin_bank = CoinBank({200:20, 100:20, 50:20, 20:20, 10:20, 5:20, 2:20, 1:20})
 
 def purchase_item():
     print("Enter value of item to buy (in pence)")

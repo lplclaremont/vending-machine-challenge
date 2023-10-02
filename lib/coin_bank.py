@@ -74,7 +74,7 @@ class CoinBank:
                 raise TypeError('Coin quantities must be non negative integers')
     
     def __check_deposit_value(self, coin_value):
-        valid_values = [200, 100, 50, 20, 10, 5, 2, 1]
+        valid_values = self.bank.keys()
         if coin_value not in valid_values:
             raise ValueError('Deposits must be a valid UK coin denomination')
         
