@@ -1,15 +1,15 @@
 class CoinBank:
     def __init__(self, coin_quantities):
-        self.__check_quantities(coin_quantities)
+        self.__check_quantities(coin_quantities.values())
         self.bank = {
-            200: coin_quantities[0],
-            100: coin_quantities[1],
-            50: coin_quantities[2],
-            20: coin_quantities[3],
-            10: coin_quantities[4],
+            200: coin_quantities[200],
+            100: coin_quantities[100],
+            50: coin_quantities[50],
+            20: coin_quantities[20],
+            10: coin_quantities[10],
             5: coin_quantities[5],
-            2: coin_quantities[6],
-            1: coin_quantities[7]
+            2: coin_quantities[2],
+            1: coin_quantities[1]
         }
         self.deposited_funds = 0
     
